@@ -1,0 +1,30 @@
+name: Build APK
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.7
+      - name: Arrange files
+        run: |
+          M=app/src/main
+          mkdir -p $M/assets $M/java/com/noor/app $M/res/mipmap-xxhdpi $M/res/mipmap-xxxhdpi $M/res/raw
+          cp app-build.gradle app/build.gradle
+          cp AndroidManifest.xml $M/
+          cp App.kt $M/java/com/noor/app/
+          cp index.html names.js manifest.json sw.js icon-192.png icon-512.png $M/assets/
+          cp icon-192.png $M/res/mipmap-xxhdpi/ic_launcher.png
+          cp icon-512.png $M/res/mipmap-xxxhdpi/ic_launcher.png
+          if [ -f adhan.mp3 ]; then cp adhan.mp3 $M/res/raw/adhan.mp3; fi
+      - run: gradle assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noor-apk
+          path: app/build/outputs/apk/debug/*.apk
