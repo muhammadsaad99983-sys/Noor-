@@ -1,0 +1,176 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f5c5c"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>نور – اسلامک ایپ</title>
+<style>
+:root{--bg:#e6f0f1;--cd:#fff;--tx:#12302f;--pr:#0f5c5c;--gd:#e5c46b}
+[data-t=dark]{--bg:#0b1c1b;--cd:#14302e;--tx:#eef3ec}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,'Noto Nastaliq Urdu','Noto Naskh Arabic',sans-serif;padding-bottom:80px}
+header{background:linear-gradient(135deg,#0f5c5c,#0a3d3d);color:#fff;padding:14px;text-align:center;font-size:20px;position:sticky;top:0;z-index:5}
+section{display:none;padding:12px;max-width:560px;margin:auto}section.on{display:block}
+.card{background:var(--cd);border-radius:16px;padding:14px;margin:10px 0;box-shadow:0 2px 8px #0002}
+.ar{font-family:'Noto Naskh Arabic','Amiri',serif;line-height:2;text-align:center;color:var(--pr)}
+[data-t=dark] .ar{color:var(--gd)}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--pr);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border:0;color:#cfe;padding:9px 0;font-size:11px}nav button.on{color:var(--gd)}nav b{display:block;font-size:20px}
+#clk{font:700 46px monospace;text-align:center;direction:ltr}
+.bar{height:10px;border-radius:5px;background:#0002;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#2a9d5c,#e5a82a)}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.pg div{border-radius:14px;padding:12px 4px;text-align:center;color:#fff;font-weight:600}
+.pg div.nx{outline:3px solid var(--gd)}.pg small{display:block;font-size:17px;margin-top:6px;direction:ltr}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.g3 button{background:var(--cd);color:var(--tx);border:0;border-radius:14px;padding:16px 4px;box-shadow:0 2px 6px #0002;font-size:13px}.g3 b{display:block;font-size:30px}
+.btn{background:var(--pr);color:#fff;border:0;border-radius:12px;padding:12px 18px;font-size:16px}
+select{padding:10px;border-radius:10px;font-size:16px;background:var(--cd);color:var(--tx);border:1px solid #0004;width:100%;margin:6px 0}
+.dua{display:flex;align-items:center;gap:10px;border-radius:16px;padding:14px;margin:10px 0;color:#12302f;cursor:pointer}.dua .e{font-size:44px}
+.dua .x{display:none;width:100%}.dua.o .x{display:block}.dua{flex-wrap:wrap}
+.nm{border-radius:14px;padding:12px;text-align:center;color:#fff}.nm .ar{color:#fff;font-size:30px;line-height:1.6}
+#cnt{font:700 54px monospace;text-align:center;direction:ltr}
+.tap{width:100%;height:90px;font-size:22px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:8px 0}
+input:not([type=range]):not([type=checkbox]),textarea{width:100%;padding:10px;margin:6px 0;border-radius:10px;border:1px solid #0004;font-size:16px;background:var(--cd);color:var(--tx);font-family:inherit}
+</style></head><body>
+<header id="ttl"></header>
+
+<section id="home" class="on">
+ <div class="card"><div id="city" style="text-align:center"></div><div id="clk"></div>
+ <div id="nxt" style="text-align:center;font-size:19px;margin:6px 0"></div><div class="bar"><i id="pb" style="width:0"></i></div>
+ <div id="hj" style="text-align:center;margin-top:8px"></div></div>
+ <div class="pg" id="pg"></div></section>
+
+<section id="tasbih"><div class="card"><select id="zk" onchange="Z=+this.value;C=0;rt()"></select>
+ <div class="ar" id="zt" style="font-size:36px"></div>
+ <svg viewBox="-110 -110 220 220" width="100%" height="260" id="beads"></svg>
+ <div id="cnt"></div>
+ <select id="tg" onchange="G=+this.value;C=0;rt()"><option>33<option>99<option>100<option>313<option>1000</select>
+ <button class="btn tap" onclick="tap()" id="tapb"></button>
+ <button class="btn" style="margin-top:8px;background:#777" onclick="C=0;rt()" id="rsb"></button></div></section>
+
+<section id="qibla"><div class="card" style="text-align:center">
+ <div style="position:relative"><video id="cv" playsinline muted autoplay style="display:none;width:100%;max-height:300px;object-fit:cover;border-radius:14px"></video><div id="co" style="display:none;position:absolute;left:8px;right:8px;bottom:8px;padding:10px;border-radius:10px;color:#fff;font-size:20px;font-weight:700"></div></div>
+ <svg viewBox="-120 -125 240 240" width="100%" height="300"><circle r="108" fill="none" stroke="#e5c46b" stroke-width="4"/>
+ <g id="dial"><circle r="95" fill="#0f5c5c"/><text y="-70" fill="#fff" text-anchor="middle" font-size="16">N</text><text y="82" fill="#fff" text-anchor="middle" font-size="16">S</text><text x="80" y="6" fill="#fff" text-anchor="middle" font-size="16">E</text><text x="-80" y="6" fill="#fff" text-anchor="middle" font-size="16">W</text>
+ <g id="kb"><text y="-78" text-anchor="middle" font-size="30">🕋</text><line y1="-45" y2="0" stroke="#e5c46b" stroke-width="3"/></g></g>
+ <path d="M-8 -118 L8 -118 L0 -106Z" fill="#e5c46b"/></svg>
+ <div id="qd" style="font:700 34px sans-serif"></div><div id="ql"></div><br>
+ <button class="btn" onclick="comp()" id="qb"></button> <button class="btn" onclick="cam()" id="cb" style="background:#a07a1c"></button></div></section>
+
+<section id="duas"></section>
+<section id="names"><div class="g3" style="grid-template-columns:1fr 1fr" id="nl"></div></section>
+<section id="more"><div class="g3" id="mg"></div></section>
+<section id="set"><div class="card" id="st"></div></section>
+
+<div id="ab" style="display:none;position:fixed;top:60px;left:10px;right:10px;z-index:9;background:#0f5c5c;color:#fff;padding:16px;border-radius:14px;font-size:20px;text-align:center;box-shadow:0 4px 16px #0006"><span id="at"></span><br><button class="btn" style="background:#e5c46b;color:#000;margin-top:8px" onclick="stopA()">⏹</button></div>
+<nav id="nv"></nav>
+<script src="names.js"></script>
+<script>
+const $=s=>document.querySelector(s),Q=localStorage;
+const D={lang:'ur',theme:'auto',fs:28,ao:0,al:{Fajr:1,Dhuhr:1,Asr:1,Maghrib:1,Isha:1},rm:0,wl:0,...JSON.parse(Q.s||'{}')},sv=()=>{Q.s=JSON.stringify(D);sync()};
+const L={
+ur:{app:'نور',home:'ہوم',tasbih:'تسبیح',qibla:'قبلہ',duas:'دعائیں',more:'مزید',names:'اسمائے حسنیٰ',set:'ترتیبات',p:['فجر','طلوع','ظہر','عصر','مغرب','عشاء'],nx:'اگلی نماز',left:'باقی',rs:'ری سیٹ',tap:'گنیں',en:'کمپاس چلائیں',th:'تھیم',lg:'زبان',fs:'عربی سائز',ao:'صرف عربی',li:'روشن',da:'تاریک',au:'خودکار',ld:'لوکیشن لے رہا ہے…',dn:'ڈگری',tg:'ہدف',cm:'کیمرہ چلائیں',ok:'✅ قبلہ سامنے ہے',ad:'اپنی دعا شامل کریں',ti:'دعا کا عنوان',tr:'ترجمہ / معنی',sa:'محفوظ کریں',de:'حذف کریں',rq:'عنوان اور عربی لکھیں',al:'نماز الارم',rm:'پہلے یاد دہانی',mn:'منٹ',au:'اذان کی آواز (اپنی فائل چنیں)',ts:'آواز سنیں',wl:'اسکرین آن رکھیں',nt:'نوٹیفکیشن کی اجازت',tm:'نماز کا وقت ہو گیا'},
+en:{app:'Noor',home:'Home',tasbih:'Tasbih',qibla:'Qibla',duas:'Duas',more:'More',names:'99 Names',set:'Settings',p:['Fajr','Sunrise','Dhuhr','Asr','Maghrib','Isha'],nx:'Next',left:'left',rs:'Reset',tap:'Tap',en:'Enable compass',th:'Theme',lg:'Language',fs:'Arabic size',ao:'Arabic only',li:'Light',da:'Dark',au:'Auto',ld:'Getting location…',dn:'Degrees',tg:'Target',cm:'Camera view',ok:'✅ Qibla ahead',ad:'Add your own dua',ti:'Dua title',tr:'Translation / meaning',sa:'Save',de:'Delete',rq:'Enter title and Arabic text',al:'Prayer alarms',rm:'Reminder before',mn:'min',au:'Adhan sound (choose your file)',ts:'Play',wl:'Keep screen on',nt:'Allow notifications',tm:'Time for prayer'},
+hi:{app:'नूर',home:'होम',tasbih:'तस्बीह',qibla:'क़िबला',duas:'दुआएँ',more:'और',names:'अस्माउल हुस्ना',set:'सेटिंग',p:['फ़ज्र','सूर्योदय','ज़ुहर','असर','मग़रिब','इशा'],nx:'अगली नमाज़',left:'बाक़ी',rs:'रीसेट',tap:'गिनें',en:'कम्पास चालू करें',th:'थीम',lg:'भाषा',fs:'अरबी साइज़',ao:'सिर्फ़ अरबी',li:'रोशन',da:'गहरा',au:'ऑटो',ld:'लोकेशन ले रहा है…',dn:'डिग्री',tg:'लक्ष्य',cm:'कैमरा चालू करें',ok:'✅ क़िबला सामने है',ad:'अपनी दुआ जोड़ें',ti:'दुआ का शीर्षक',tr:'अनुवाद / मतलब',sa:'सेव करें',de:'हटाएँ',rq:'शीर्षक और अरबी लिखें'},
+ar:{app:'نور',home:'الرئيسية',tasbih:'سبحة',qibla:'القبلة',duas:'أدعية',more:'المزيد',names:'الأسماء الحسنى',set:'الإعدادات',p:['الفجر','الشروق','الظهر','العصر','المغرب','العشاء'],nx:'الصلاة القادمة',left:'متبقي',rs:'إعادة',tap:'اضغط',en:'تشغيل البوصلة',th:'المظهر',lg:'اللغة',fs:'حجم الخط',ao:'عربي فقط',li:'فاتح',da:'داكن',au:'تلقائي',ld:'جارٍ تحديد الموقع…',dn:'درجة',tg:'الهدف',cm:'تشغيل الكاميرا',ok:'✅ القبلة أمامك',ad:'أضف دعاءك',ti:'عنوان الدعاء',tr:'الترجمة',sa:'حفظ',de:'حذف',rq:'أدخل العنوان والنص العربي'}};
+const LN={ur:'اردو',en:'English',hi:'हिन्दी',ar:'العربية'};
+const t=k=>(L[D.lang]||L.en)[k]||L.en[k];
+const ZK=['سُبْحَانَ اللَّهِ','الْحَمْدُ لِلَّهِ','اللَّهُ أَكْبَرُ','أَسْتَغْفِرُ اللَّهَ','لَا إِلَهَ إِلَّا اللَّهُ','اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ'];
+const DU=[['🍽️','#fde7a9','بِسْمِ اللَّهِ','کھانے سے پہلے','Before eating','اللہ کے نام سے (شروع کرتا ہوں)','In the name of Allah'],
+['🥛','#cdeccf','الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ','کھانے کے بعد','After eating','سب تعریف اللہ کی جس نے ہمیں کھلایا، پلایا اور مسلمان بنایا','Praise be to Allah who fed us, gave us drink and made us Muslims'],
+['🌙','#cfd8f6','بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا','سونے سے پہلے','Before sleeping','اے اللہ! تیرے نام سے مرتا اور جیتا ہوں','In Your name, O Allah, I die and I live'],
+['🚪','#f6d3d3','بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ','گھر سے نکلتے وقت','Leaving home','اللہ کے نام سے، میں نے اللہ پر بھروسا کیا، نہ طاقت ہے نہ قوت مگر اللہ سے','In the name of Allah, I trust in Allah; there is no power except with Allah'],
+['🕌','#bfe3ea','اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ','مسجد میں داخل ہوتے وقت','Entering the mosque','اے اللہ! میرے لیے اپنی رحمت کے دروازے کھول دے','O Allah, open for me the doors of Your mercy'],
+['🐪','#e6e29a','سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنقَلِبُونَ','سواری پر بیٹھتے وقت','Riding / travel','پاک ہے وہ جس نے اسے ہمارے بس میں کر دیا، اور ہم اپنے رب کی طرف لوٹنے والے ہیں','Glory to Him who subjected this to us, and to our Lord we shall return'],
+['📖','#e3d0f0','رَبِّ زِدْنِي عِلْمًا','علم کے لیے','For knowledge','اے میرے رب! میرے علم میں اضافہ فرما','My Lord, increase me in knowledge']];
+const COL=['#2d4a8a','#c9783a','#d4a437','#b8742f','#8a4a7a','#1c2a5a'],CN=['#1d7a6b','#7a3f9e','#b5483a','#2d6bb0','#a07a1c','#3a8a4a'];
+const P=['Fajr','Sunrise','Dhuhr','Asr','Maghrib','Isha'];
+let HD=null,ST=null,TM=JSON.parse(Q.tm||'null'),POS=JSON.parse(Q.pos||'null'),QB=0,Z=0,G=33,C=0,PG='home';
+const open=id=>{PG=id;document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id==id));
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.p==id));$('#ttl').textContent=t(id=='home'?'app':id)+(id=='home'?'':'');scrollTo(0,0)};
+function rtl(){const r=D.lang=='ur'||D.lang=='ar';document.documentElement.dir=r?'rtl':'ltr';document.documentElement.lang=D.lang}
+function theme(){document.documentElement.dataset.t=D.theme=='auto'?(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'):D.theme}
+function build(){rtl();theme();
+ $('#nv').innerHTML=[['home','🏠'],['tasbih','📿'],['qibla','🧭'],['duas','🤲'],['more','☰']].map(([p,e])=>`<button data-p="${p}" onclick="open('${p}')"><b>${e}</b>${t(p)}</button>`).join('');
+ $('#pg').innerHTML=P.map((k,i)=>`<div id="p${i}" style="background:${COL[i]}">${t('p')[i]}<small>--:--</small></div>`).join('');
+ $('#zk').innerHTML=ZK.map((z,i)=>`<option value="${i}">${z}</option>`).join('');$('#zk').value=Z;$('#tg').value=G;
+ $('#tapb').textContent=t('tap');$('#rsb').textContent=t('rs');$('#qb').textContent=t('en');$('#cb').textContent=t('cm');$('#ql').textContent=t('dn');
+ $('#duas').innerHTML=addUI()+CD.map(cdHTML).join('')+DU.map(d=>{const ti=D.lang=='ur'?d[3]:d[4],tr=D.lang=='ur'?d[5]:d[6];
+  return `<div class="dua" style="background:linear-gradient(135deg,${d[1]},#fff9)" onclick="this.classList.toggle('o')"><span class="e">${d[0]}</span><b style="flex:1">${ti}</b>
+  <div class="x"><div class="ar" style="font-size:${D.fs}px;color:#0f5c5c">${d[2]}</div>${D.ao?'':`<p>${tr}</p>`}</div></div>`}).join('');
+ $('#nl').innerHTML=NM.map((n,i)=>`<div class="nm" style="background:${CN[i%6]}"><div class="ar">${n[0]}</div><small>${i+1}</small> <b>${n[1]}</b><div>${D.lang=='ur'?n[3]:n[2]}</div></div>`).join('');
+ $('#mg').innerHTML=[['names','🕋'],['tasbih','📿'],['qibla','🧭'],['duas','🤲'],['set','⚙️']].map(([p,e])=>`<button onclick="open('${p}')"><b>${e}</b>${t(p)}</button>`).join('');
+ $('#st').innerHTML=`<label>${t('lg')}</label><select onchange="D.lang=this.value;sv();build();open('set')">${Object.keys(LN).map(k=>`<option value="${k}" ${k==D.lang?'selected':''}>${LN[k]}</option>`).join('')}</select>
+ <label>${t('th')}</label><select onchange="D.theme=this.value;sv();theme()">${['auto','light','dark'].map(k=>`<option value="${k}" ${k==D.theme?'selected':''}>${t(k.slice(0,2))}</option>`).join('')}</select>
+ <label>${t('fs')}</label><input type="range" min="20" max="48" value="${D.fs}" style="width:100%" onchange="D.fs=+this.value;sv();build();open('set')">
+ <div class="row"><span>${t('ao')}</span><input type="checkbox" ${D.ao?'checked':''} onchange="D.ao=+this.checked;sv();build();open('set')"></div>`+alUI();
+ rt();fill();open(PG)}
+function rt(){$('#zt').textContent=ZK[Z];$('#zt').style.fontSize=D.fs+8+'px';$('#cnt').textContent=String(C).padStart(3,'0')+' / '+G;
+ const n=Math.min(G,33);$('#beads').innerHTML=Array.from({length:n},(_,i)=>{const a=i/n*6.283-1.57,on=i<C%(n+1)||C>=G;
+ return `<circle cx="${95*Math.cos(a)}" cy="${95*Math.sin(a)}" r="${n>20?8:10}" fill="${on?'#e5c46b':'hsl('+i*360/n+',55%,45%)'}"/>`}).join('')}
+function tap(){C++;navigator.vibrate&&navigator.vibrate(20);if(C>G){C=1}if(C==G)navigator.vibrate&&navigator.vibrate([100,50,100]);rt()}
+const f12=s=>{const[h,m]=s.split(':');return(h%12||12)+':'+m+' '+(h<12?'AM':'PM')};
+function fill(){if(!TM)return;sync();P.forEach((k,i)=>$('#p'+i+' small').textContent=f12(TM.t[k].slice(0,5)));
+ $('#city').textContent=POS?POS.la.toFixed(3)+'°, '+POS.lo.toFixed(3)+'°':''}
+function tick(){const n=new Date();$('#clk').textContent=n.toLocaleTimeString('en-GB');chk(n);
+ $('#hj').textContent=n.toLocaleDateString(D.lang=='ur'?'ur-PK-u-ca-islamic':D.lang+'-u-ca-islamic',{dateStyle:'full'});
+ if(!TM){$('#nxt').textContent=t('ld');return}
+ const c=P.map(k=>{const[h,m]=TM.t[k].split(':');const d=new Date(n);d.setHours(+h,+m,0,0);return d});
+ let i=c.findIndex(d=>d>n),pv;if(i<0){i=0;c[0]=new Date(c[0].getTime()+864e5);pv=new Date(c[5])}else pv=i>0?c[i-1]:new Date(c[5].getTime()-864e5);
+ const ms=c[i]-n,h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);
+ $('#nxt').textContent=`${t('nx')}: ${t('p')[i]} — ${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')} ${t('left')}`;
+ $('#pb').style.width=Math.min(100,(n-pv)/(c[i]-pv)*100)+'%';document.querySelectorAll('.pg div').forEach((e,j)=>e.classList.toggle('nx',j==i))}
+async function load(p){POS=p;Q.pos=JSON.stringify(p);const d=new Date().toDateString();
+ if(TM&&TM.d==d&&Math.abs(TM.la-p.la)<.3){fill();sched();return}
+ try{const r=await fetch(`https://api.aladhan.com/v1/timings?latitude=${p.la}&longitude=${p.lo}&method=1&school=1`);
+ TM={d,la:p.la,t:(await r.json()).data.timings};Q.tm=JSON.stringify(TM)}catch(e){}
+ fill();qib();sched()}
+function qib(){if(!POS)return;const r=Math.PI/180,L1=POS.la*r,K=21.4225*r,d=(39.8262-POS.lo)*r;
+ QB=(Math.atan2(Math.sin(d),Math.cos(L1)*Math.tan(K)-Math.sin(L1)*Math.cos(d))/r+360)%360;
+ $('#qd').textContent=QB.toFixed(0)+'°';$('#kb').setAttribute('transform','rotate('+QB+')')}
+async function comp(){if(DeviceOrientationEvent.requestPermission&&await DeviceOrientationEvent.requestPermission()!=='granted')return;
+ const h=e=>{const a=e.webkitCompassHeading??(e.absolute||e.alpha!=null?360-e.alpha:null);if(a!=null){HD=a;$('#dial').setAttribute('transform','rotate('+(-a)+')');aim()}};
+ addEventListener('deviceorientationabsolute',h,true);addEventListener('deviceorientation',h,true)}
+async function sched(){if(!window.Android||!POS)return;const Ls=[],now=Date.now(),p2=n=>String(n).padStart(2,'0');
+ for(let k=0;k<7;k++){const d=new Date(now+k*864e5);
+  try{const r=await fetch(`https://api.aladhan.com/v1/timings/${p2(d.getDate())}-${p2(d.getMonth()+1)}-${d.getFullYear()}?latitude=${POS.la}&longitude=${POS.lo}&method=1&school=1`);const T=(await r.json()).data.timings;
+  P.forEach((p,i)=>{if(i==1||!D.al[p])return;const[h,m]=T[p].split(':'),x=new Date(d);x.setHours(+h,+m,0,0);
+   if(+x>now)Ls.push({id:k*10+i,t:+x,n:t('p')[i],o:0});if(D.rm&&x-D.rm*6e4>now)Ls.push({id:100+k*10+i,t:x-D.rm*6e4,n:t('p')[i],o:D.rm})})}catch(e){}}
+ Android.schedule(JSON.stringify(Ls))}
+let GA=null,AU=null,WL=null;const FR={};
+addEventListener('click',()=>{try{GA=GA||new(window.AudioContext||webkitAudioContext)();GA.resume()}catch(e){}},{once:true});
+const idb=(m,v)=>new Promise((ok,no)=>{const q=indexedDB.open('noor',1);q.onupgradeneeded=()=>q.result.createObjectStore('f');q.onsuccess=()=>{const st=q.result.transaction('f',m=='get'?'readonly':'readwrite').objectStore('f'),rq=m=='get'?st.get('a'):st.put(v,'a');rq.onsuccess=()=>ok(rq.result);rq.onerror=no};q.onerror=no});
+async function setA(f){if(f){await idb('put',f);alert('✔')}}
+function beep(){try{const a=GA||new(window.AudioContext||webkitAudioContext)(),t0=a.currentTime;[523,659,784,659,523,659,784,1046].forEach((f,i)=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=f;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.3,t0+i*.7);g.gain.exponentialRampToValueAtTime(.001,t0+i*.7+.65);o.start(t0+i*.7);o.stop(t0+i*.7+.7)})}catch(e){}}
+async function play(){stopA(1);const b=await idb('get').catch(()=>null);if(b){AU=new Audio(URL.createObjectURL(b));AU.play().catch(()=>beep())}else beep()}
+function stopA(k){if(AU){AU.pause();AU=null}if(!k)$('#ab').style.display='none'}
+async function wake(){try{if(D.wl&&navigator.wakeLock)WL=await navigator.wakeLock.request('screen');else if(WL){WL.release();WL=null}}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)wake()});
+function sync(){window.Android&&TM&&Android.schedule(JSON.stringify({t:TM.t,al:D.al,rm:D.rm}))}
+function ring(k,ty,off){const nm=t('p')[P.indexOf(k)],msg=ty=='adhan'?`🕌 ${nm} — ${t('tm')}`:`⏰ ${nm} — ${off} ${t('mn')} ${t('left')}`;
+ $('#at').textContent=msg;$('#ab').style.display='block';if(ty=='adhan')play();else navigator.vibrate&&navigator.vibrate([200,100,200]);
+ if(window.Notification&&Notification.permission=='granted')navigator.serviceWorker.ready.then(x=>x.showNotification(msg,{icon:'icon-192.png',vibrate:[300,100,300],tag:k+ty})).catch(()=>{})}
+function chk(n){if(!TM||window.Android)return;P.forEach((k,i)=>{if(i==1||!D.al[k])return;const[h,m]=TM.t[k].split(':'),d=new Date(n);d.setHours(+h,+m,0,0);
+ [[0,'adhan'],[D.rm,'rem']].forEach(([off,ty])=>{if(ty=='rem'&&!off)return;const at=d-off*6e4,id=n.toDateString()+k+ty;if(n>=at&&n-at<60000&&!FR[id]){FR[id]=1;ring(k,ty,off)}})})}
+function alUI(){const ps=['Fajr','Dhuhr','Asr','Maghrib','Isha'],nm=t('p');
+ return `<hr><b>🔔 ${t('al')}</b>`+ps.map(k=>`<div class="row"><span>${nm[P.indexOf(k)]}</span><input type="checkbox" ${D.al[k]?'checked':''} onchange="D.al['${k}']=+this.checked;sv();sched()"></div>`).join('')+
+ `<label>${t('rm')}</label><select onchange="D.rm=+this.value;sv();sched()">${[0,5,10,15,30].map(m=>`<option value="${m}" ${m==D.rm?'selected':''}>${m} ${t('mn')}</option>`).join('')}</select>
+ <label>${t('au')}</label><input type="file" accept="audio/*" onchange="setA(this.files[0])">
+ <button class="btn" onclick="play()">▶ ${t('ts')}</button> <button class="btn" style="background:#b5483a" onclick="stopA()">⏹</button> <button class="btn" style="background:#777" onclick="idb('put',null).then(()=>alert('OK'))">↺</button>
+ <div class="row"><span>${t('wl')}</span><input type="checkbox" ${D.wl?'checked':''} onchange="D.wl=+this.checked;sv();wake()"></div>
+ <button class="btn" onclick="Notification.requestPermission().then(p=>alert(p))">${t('nt')}</button>`}
+let CD=JSON.parse(Q.cd||'[]');
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function addUI(){return `<button class="btn" style="width:100%" onclick="const f=$('#af');f.style.display=f.style.display=='block'?'none':'block'">＋ ${t('ad')}</button>
+<div class="card" id="af" style="display:none"><input type="text" id="ft" placeholder="${t('ti')}"><textarea id="fa" class="ar" dir="rtl" rows="3" placeholder="عربی"></textarea><textarea id="fr" rows="2" placeholder="${t('tr')}"></textarea><input type="file" id="fi" accept="image/*"><button class="btn" onclick="addD()">${t('sa')}</button></div>`}
+function shrink(f){return new Promise(ok=>{const i=new Image();i.onload=()=>{const k=Math.min(1,400/i.width),c=document.createElement('canvas');c.width=i.width*k;c.height=i.height*k;c.getContext('2d').drawImage(i,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.7))};i.src=URL.createObjectURL(f)})}
+async function addD(){const ti=$('#ft').value.trim(),ar=$('#fa').value.trim();if(!ti||!ar){alert(t('rq'));return}
+ const f=$('#fi').files[0],im=f?await shrink(f):'';CD.unshift({ti,ar,tr:$('#fr').value.trim(),im});
+ try{Q.cd=JSON.stringify(CD)}catch(e){CD.shift();alert('Storage full');return}build();open('duas')}
+function delD(i){if(confirm(t('de')+'?')){CD.splice(i,1);Q.cd=JSON.stringify(CD);build();open('duas')}}
+function cdHTML(d,i){return `<div class="dua" style="background:linear-gradient(135deg,#d9ecec,#fff9)" onclick="this.classList.toggle('o')">${d.im?`<img src="${d.im}" style="width:64px;height:64px;object-fit:cover;border-radius:12px">`:'<span class="e">🤲</span>'}<b style="flex:1">${esc(d.ti)}</b><div class="x"><div class="ar" style="font-size:${D.fs}px">${esc(d.ar)}</div>${D.ao?'':`<p>${esc(d.tr)}</p>`}<button class="btn" style="background:#b5483a" onclick="event.stopPropagation();delD(${i})">${t('de')}</button></div></div>`}
+function aim(){const o=$('#co');if(!ST||HD==null)return;const d=((QB-HD+540)%360)-180,k=Math.abs(d)<8;
+ o.textContent=k?t('ok'):(d>0?'➡️ ':'⬅️ ')+Math.abs(d).toFixed(0)+'°';o.style.background=k?'#1d8a4a':'#000a'}
+async function cam(){const v=$('#cv'),o=$('#co');
+ if(ST){ST.getTracks().forEach(x=>x.stop());ST=null;v.style.display=o.style.display='none';return}
+ try{ST=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});v.srcObject=ST;v.style.display=o.style.display='block';
+ if(HD==null)comp();aim()}catch(e){alert('Camera: '+e.message+' (HTTPS required)')}}
+wake();build();qib();tick();setInterval(tick,1000);
+navigator.geolocation&&navigator.geolocation.getCurrentPosition(p=>{load({la:p.coords.latitude,lo:p.coords.longitude});qib()},()=>{POS&&load(POS)});
+if('serviceWorker'in navigator&&location.protocol!='file:')navigator.serviceWorker.register('sw.js');
+</script></body></html>
